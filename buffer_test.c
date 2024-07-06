@@ -19,6 +19,16 @@ int main() {
         return 1;
     }
 
+    // Leggi dati dal dispositivo
+    memset(read_buffer, 0, BUFFER_SIZE);  // Pulisci il buffer di lettura
+    bytes_read = read(fd, read_buffer, BUFFER_SIZE);
+    if (bytes_read < 0) {
+        perror("Failed to read from the device");
+        close(fd);
+        return 1;
+    }
+    printf("Read %zd bytes from the device: %s\n", bytes_read, read_buffer);
+
     // Scrivi dati nel dispositivo
     bytes_written = write(fd, WRITE_DATA, strlen(WRITE_DATA) + 1);  // +1 per il terminatore di stringa
     if (bytes_written < 0) {
